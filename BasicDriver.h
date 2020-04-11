@@ -1,14 +1,12 @@
-//
-// Created by micha on 4/10/2020.
-//
+#ifndef BASICDRIVER_H
+#define BASICDRIVER_H
 
-#ifndef CSCEPROJ3_BASICDRIVER_H
-#define CSCEPROJ3_BASICDRIVER_H
+#include "Defs.h"
+#include "Driver.h"
 
-
-class BasicDriver {
-
+class BasicDriver : public Driver {
+    void printDriver() override;
 };
 
 
-#endif //CSCEPROJ3_BASICDRIVER_H
+#endif //BASICDRIVER_H

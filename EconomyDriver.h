@@ -1,14 +1,24 @@
-//
-// Created by micha on 4/10/2020.
-//
+#ifndef ECONOMYDRIVER_H
+#define ECONOMYDRIVER_H
 
-#ifndef CSCEPROJ3_ECONOMYDRIVER_H
-#define CSCEPROJ3_ECONOMYDRIVER_H
+#include "Defs.h"
+#include "Driver.h"
 
+class EconomyDriver : public Driver {
+public:
+    EconomyDriver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open, bool pets,
+                  const string &notes, double reliability);
 
-class EconomyDriver {
+    EconomyDriver();
 
+    void printDriver() override;
+private:
+    double reliability;
+public:
+    double getReliability() const;
+
+    void setReliability(double reliability);
 };
 
 
-#endif //CSCEPROJ3_ECONOMYDRIVER_H
+#endif //ECONOMYDRIVER_H

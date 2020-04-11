@@ -12,7 +12,7 @@ public:
      */
     Driver();
     Driver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open, bool pets,
-           const string &notes);
+           const string &notes, int cargoCap);
 
     /**
      * Getters and setters
@@ -39,11 +39,18 @@ public:
     /**
      * Prints the driver
      */
-    void printDriver();
+    virtual void printDriver();
+    virtual pair<int, int> getCapacityRange() = 0;
 
-private:
+protected:
     string name, notes;
-    int id, cap;
+    int id, cap, cargoCap;
+public:
+    int getCargoCap() const;
+
+    void setCargoCap(int cargoCap);
+
+protected:
     double rating;
     bool hcp, open, pets;
     VehicleType type;

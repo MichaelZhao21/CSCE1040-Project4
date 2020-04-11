@@ -1,14 +1,12 @@
-//
-// Created by micha on 4/10/2020.
-//
+#ifndef LUXARYDRIVER_H
+#define LUXARYDRIVER_H
 
-#ifndef CSCEPROJ3_LUXARYDRIVER_H
-#define CSCEPROJ3_LUXARYDRIVER_H
+#include "Defs.h"
+#include "Driver.h"
 
-
-class LuxaryDriver {
-
+class LuxaryDriver : public Driver {
+    void printDriver() override;
 };
 
 
-#endif //CSCEPROJ3_LUXARYDRIVER_H
+#endif //LUXARYDRIVER_H

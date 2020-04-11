@@ -1,12 +1,12 @@
 #include "Util.h"
 #include "Driver.h"
 
-
-Driver::Driver() : name(""), id(0), cap(0), hcp(false), type(VehicleType::COMPACT_2_DR), rating(0.0), open(false), pets(false), notes("") {}
+Driver::Driver() : name(""), id(0), cap(0), hcp(false), type(VehicleType::COMPACT_2_DR), rating(0.0), open(false),
+                pets(false), notes(""), cargoCap(0) {}
 
 Driver::Driver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open, bool pets,
-               const string &notes) : name(name), id(id), cap(cap), hcp(hcp), type(type), rating(rating), open(open),
-                                      pets(pets), notes(notes) {}
+               const string &notes, int cargoCap) : name(name), id(id), cap(cap), hcp(hcp), type(type), rating(rating), open(open),
+                                                pets(pets), notes(notes), cargoCap(cargoCap) {}
 
 const string &Driver::getName() const {
     return name;
@@ -78,6 +78,14 @@ const string &Driver::getNotes() const {
 
 void Driver::setNotes(const string &notes) {
     Driver::notes = notes;
+}
+
+int Driver::getCargoCap() const {
+    return cargoCap;
+}
+
+void Driver::setCargoCap(int cargoCap) {
+    Driver::cargoCap = cargoCap;
 }
 
 void Driver::printDriver() {
