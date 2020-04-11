@@ -35,22 +35,24 @@ public:
     void setPets(bool pets);
     const string &getNotes() const;
     void setNotes(const string &notes);
+    int getCargoCap() const;
+    void setCargoCap(int cargoCap);
 
     /**
      * Prints the driver
      */
     virtual void printDriver();
+
+    /**
+     * Gets the minimum and maximum capacity
+     * of the type of driver
+     * @return pair of ints representing [min, max]
+     */
     virtual pair<int, int> getCapacityRange() = 0;
 
 protected:
     string name, notes;
     int id, cap, cargoCap;
-public:
-    int getCargoCap() const;
-
-    void setCargoCap(int cargoCap);
-
-protected:
     double rating;
     bool hcp, open, pets;
     VehicleType type;

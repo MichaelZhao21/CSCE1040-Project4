@@ -8,6 +8,10 @@
 #include "Passes.h"
 #include "Driver.h"
 #include "Drivers.h"
+#include "EconomyDriver.h"
+#include "BasicDriver.h"
+#include "GroupDriver.h"
+#include "LuxaryDriver.h"
 
 enum TextLabel {INTRO = 0, MAIN, DRIVER, PASS, ADMIN};
 

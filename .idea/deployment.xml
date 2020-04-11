@@ -5,7 +5,7 @@
       <paths name="CSCE Machines">
         <serverdata>
           <mappings>
-            <mapping deploy="/1040/hwk/three" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/1040/hwk/four" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath path="/1040/hwk/three/cmake-build-debug" />
