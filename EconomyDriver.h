@@ -10,29 +10,28 @@ public:
      * Constructors
      */
     EconomyDriver();
-    EconomyDriver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open, bool pets,
-                  const string &notes, int cargoCap, double reliability);
+    EconomyDriver(const string &name, int id, int cap, bool hcp, double rating, bool open, bool pets,
+                  const string &notes, int cargoCap, int reliability);
 
     /**
      * Setters and getters
      */
-    double getReliability() const;
-    void setReliability(double reliability);
+    int getReliability() const;
+    void setReliability(int reliability);
 
     /**
      * Prints the driver
      */
-    void printDriver() override;
+    void printDriver(vs& extra) override;
 
     /**
-     * Gets the minimum and maximum capacity
-     * of the type of driver
-     * @return pair of ints representing [min, max]
+     * Gets the driver type in an integer
+     * @return integer representing the type of driver
      */
-    pair<int, int> getCapacityRange() override;
+    int getDriverType() override;
 
 private:
-    double reliability;
+    int reliability;
 };
 
 #endif //ECONOMYDRIVER_H

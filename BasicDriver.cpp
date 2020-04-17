@@ -1,18 +1,38 @@
 #include "Util.h"
+#include "BasicDriver.h"
 
-BasicDriver::BasicDriver() {}
 
-BasicDriver::BasicDriver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open,
-                         bool pets, const string &notes, int cargoCap) : Driver(name, id, cap, hcp, type, rating, open,
-                                                                                pets, notes, cargoCap) {}
+BasicDriver::BasicDriver() : airConditioning(false), music(false) {}
 
-void BasicDriver::printDriver() {
-    Driver::printDriver();
-    vs text = {"Basic Class",
-               "No extra info!"};
-    Util::prettyPrint(text);
+BasicDriver::BasicDriver(const string &name, int id, int cap, bool hcp, double rating, bool open,
+                         bool pets, const string &notes, int cargoCap, bool airConditioning, bool music) : Driver(name, id, cap, hcp, rating, open,
+                                                                                pets, notes, cargoCap),
+                                                                                airConditioning(airConditioning),
+                                                                                music(music) {}
+
+bool BasicDriver::getAirConditioning() const {
+    return airConditioning;
 }
 
-pair<int, int> BasicDriver::getCapacityRange() {
-    return pair<int, int>{2, 4};
+void BasicDriver::setAirConditioning(bool airConditioning) {
+    BasicDriver::airConditioning = airConditioning;
+}
+
+bool BasicDriver::getMusic() const {
+    return music;
+}
+
+void BasicDriver::setMusic(bool music) {
+    BasicDriver::music = music;
+}
+
+void BasicDriver::printDriver(vs& extra) {
+    vs text = {"Class: Basic",
+               "Air Conditioning: " + Util::bts(airConditioning),
+               "Allows passenger to Play Music: " + Util::bts(music)};
+    Driver::printDriver(text);
+}
+
+int BasicDriver::getDriverType() {
+    return 2;
 }

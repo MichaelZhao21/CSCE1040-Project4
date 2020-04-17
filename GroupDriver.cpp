@@ -1,10 +1,12 @@
 #include "Util.h"
+#include "GroupDriver.h"
 
-GroupDriver::GroupDriver() : extraLegRoom(false), recliningSeats(false), noise(NoiseLevel::SILENT) {}
 
-GroupDriver::GroupDriver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open,
+GroupDriver::GroupDriver() : foodAllowed(false), extraLegRoom(false), recliningSeats(false), noise(NoiseLevel::SILENT) {}
+
+GroupDriver::GroupDriver(const string &name, int id, int cap, bool hcp, double rating, bool open,
                          bool pets, const string &notes, int cargoCap, bool foodAllowed, bool extraLegRoom,
-                         bool recliningSeats, NoiseLevel noise) : Driver(name, id, cap, hcp, type, rating, open, pets,
+                         bool recliningSeats, NoiseLevel noise) : Driver(name, id, cap, hcp, rating, open, pets,
                                                                          notes, cargoCap), foodAllowed(foodAllowed),
                                                                   extraLegRoom(extraLegRoom),
                                                                   recliningSeats(recliningSeats), noise(noise) {}
@@ -41,18 +43,13 @@ void GroupDriver::setNoise(NoiseLevel noise) {
     GroupDriver::noise = noise;
 }
 
-void GroupDriver::printDriver() {
-    Driver::printDriver();
-    vs text = {"Group Class",
+void GroupDriver::printDriver(vs& extra) {
+    vs text = {"Class: Group",
                "Food allowed: " + Util::bts(foodAllowed),
                "Extra Legroom: " + Util::bts(extraLegRoom),
                "Reclining Seats: " + Util::bts(recliningSeats),
                "Noise Level Allowed: " + noiseLevelToString(noise)};
-    Util::prettyPrint(text);
-}
-
-pair<int, int> GroupDriver::getCapacityRange() {
-    return pair<int, int>{5, 7};
+    Driver::printDriver(text);
 }
 
 string GroupDriver::noiseLevelToString(NoiseLevel noise) {
@@ -71,4 +68,8 @@ string GroupDriver::noiseLevelToString(NoiseLevel noise) {
             perror("Invalid NoiseLevel in GroupDriver::noiseLevelToString");
             return "";
     }
+}
+
+int GroupDriver::getDriverType() {
+    return 3;
 }

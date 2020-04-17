@@ -3,4 +3,4 @@ project(CSCEProj3)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(CSCEProj3 main.cpp Pass.cpp Pass.h Ride.cpp Ride.h Driver.cpp Driver.h Passes.cpp Passes.h Rides.cpp Rides.h Drivers.cpp Drivers.h Util.cpp Util.h Defs.h EconomyDriver.cpp EconomyDriver.h BasicDriver.cpp BasicDriver.h GroupDriver.cpp GroupDriver.h LuxaryDriver.cpp LuxaryDriver.h)
+add_executable(CSCEProj3 main.cpp Pass.cpp Pass.h Ride.cpp Ride.h Driver.cpp Driver.h Passes.cpp Passes.h Rides.cpp Rides.h Drivers.cpp Drivers.h Util.cpp Util.h Defs.h EconomyDriver.cpp EconomyDriver.h BasicDriver.cpp BasicDriver.h GroupDriver.cpp GroupDriver.h LuxuryDriver.cpp LuxuryDriver.h)

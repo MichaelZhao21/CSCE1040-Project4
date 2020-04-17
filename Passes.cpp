@@ -36,7 +36,7 @@ void Passes::addPass() {
 
 void Passes::editPass() {
     string name;
-    int id, payType;
+    int payType;
     bool hcp, pets;
     double minRating;
 
@@ -64,10 +64,7 @@ void Passes::removePass() {
 }
 
 int Passes::findPass() {
-    if (passListEmpty()) {
-        perror("PassList empty in Passes::findPass");
-        exit(1);
-    }
+    assert(!passListEmpty());
     vs text {"Pick a passenger"};
     for (pair<int, Pass> pp : passList) {
         text.push_back(to_string(pp.first) + " | " + pp.second.getName());

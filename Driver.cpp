@@ -1,11 +1,11 @@
 #include "Util.h"
 #include "Driver.h"
 
-Driver::Driver() : name(""), id(0), cap(0), hcp(false), type(VehicleType::COMPACT_2_DR), rating(0.0), open(false),
+Driver::Driver() : name(""), id(0), cap(0), hcp(false), rating(0.0), open(false),
                 pets(false), notes(""), cargoCap(0) {}
 
-Driver::Driver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open, bool pets,
-               const string &notes, int cargoCap) : name(name), id(id), cap(cap), hcp(hcp), type(type), rating(rating), open(open),
+Driver::Driver(const string &name, int id, int cap, bool hcp, double rating, bool open, bool pets,
+               const string &notes, int cargoCap) : name(name), id(id), cap(cap), hcp(hcp), rating(rating), open(open),
                                                 pets(pets), notes(notes), cargoCap(cargoCap) {}
 
 const string &Driver::getName() const {
@@ -38,14 +38,6 @@ bool Driver::getHcp() const {
 
 void Driver::setHcp(bool hcp) {
     Driver::hcp = hcp;
-}
-
-VehicleType Driver::getType() const {
-    return type;
-}
-
-void Driver::setType(VehicleType type) {
-    Driver::type = type;
 }
 
 double Driver::getRating() const {
@@ -88,33 +80,17 @@ void Driver::setCargoCap(int cargoCap) {
     Driver::cargoCap = cargoCap;
 }
 
-void Driver::printDriver() {
+void Driver::printDriver(vs& extra) {
     vs text {"Driver #" + to_string(id),
                    "Name: " + name,
                    "Vehicle capacity: " + to_string(cap),
+                   "Cargo capacity (luggage bags): " + to_string(cargoCap),
                    "Handicapped capable: " + Util::bts(hcp),
-                   "Vehicle type: " + vehicleTypeToString(type),
                    "Driver Rating: " + to_string(rating),
                    "Available: " + Util::bts(open),
                    "Pets allowed: " + Util::bts(pets),
                    "Notes: " + notes};
+    if (!extra.empty())
+        text.insert(text.end(), extra.begin(), extra.end());
     Util::prettyPrint(text);
-}
-
-string Driver::vehicleTypeToString(VehicleType type) {
-    switch (type) {
-        case COMPACT_2_DR:
-            return "Compact (2WD)";
-        case SEDAN_4_DR:
-            return "Sedan (4WD)";
-        case SUV:
-            return "SUV";
-        case VAN:
-            return "Van";
-        case OTHER:
-            return "Other";
-        default:
-            perror("Invalid VehicleType in Driver::vehicleTypeToString");
-            return "";
-    }
 }

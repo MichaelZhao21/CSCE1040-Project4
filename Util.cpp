@@ -112,7 +112,6 @@ bool Util::parseInput(time_t& in, const string &message, bool checkDefault) {
     }
 
     in = mktime(ltm);
-    time_t memad = time(nullptr);
     return true;
 }
 
@@ -164,10 +163,10 @@ void Util::load(Drivers &drivers, Passes &passes, Rides &rides) {
     ifstream in("mg.dat");
     if (in.good()) {
         unordered_map<int, Pass> passMap {};
-        unordered_map<int, Driver> driverMap {};
+        unordered_map<int, Driver*> driverMap {};
         unordered_map<int, Ride> rideMap {};
         string name, notes, pickLoc, dropLoc;
-        int pay, id, cap, status, passId, driverId, rid, pid, did, type;
+        int pay, id, cap, status, passId, driverId, rid, pid, did, cc;
         double rat;
         long pickTime, dropTime;
         bool hcp, pets, open;
@@ -175,28 +174,49 @@ void Util::load(Drivers &drivers, Passes &passes, Rides &rides) {
 
         in >> rid >> pid >> did;
         while (in >> rpd) {
+            in.ignore();
             if (rpd == 'd') {
+                int dt;
+                in >> dt;
                 in.ignore();
                 getline(in, name);
                 getline(in, notes);
-                in >> id >> cap >> hcp >> type >> rat >> open >> pets;
-                Driver d(name, id, cap, hcp, (VehicleType) type, rat, open, pets, notes);
-                driverMap[id] = d;
+                in >> id >> cap >> hcp >> rat >> open >> pets >> cc;
+                if (dt == 1) {
+                    int rel;
+                    in >> rel;
+                    driverMap[id] = new EconomyDriver(name, id, cap, hcp, rat, open, pets, notes, cc, rel);
+                }
+                else if (dt == 2) {
+                    bool airCon, music;
+                    in >> airCon >> music;
+                    driverMap[id] = new BasicDriver(name, id, cap, hcp, rat, open, pets, notes, cc, airCon, music);
+                }
+                else if (dt == 3) {
+                    bool foodAllowed, extraLegRoom, recliningSeats;
+                    int noise;
+                    in >> foodAllowed >> extraLegRoom >> recliningSeats >> noise;
+                    driverMap[id] = new GroupDriver(name, id, cap, hcp, rat, open, pets, notes, cc, foodAllowed, extraLegRoom, recliningSeats, (NoiseLevel) noise);
+                }
+                else {
+                    bool TV, phone, bar, partyLights, bluetooth, wifi;
+                    string extras;
+                    in >> TV >> phone >> bar >> partyLights >> bluetooth >> wifi;
+                    cin.ignore();
+                    getline(cin, extras);
+                    driverMap[id] = new LuxuryDriver(name, id, cap, hcp, rat, open, pets, notes, cc, TV, phone, bar, partyLights, bluetooth, wifi, extras);
+                }
             }
             else if (rpd == 'p') {
-                in.ignore();
                 getline(in, name);
                 in >> id >> pay >> hcp >> rat >> pets;
-                Pass p(name, id, (PayType) pay, hcp, rat, pets);
-                passMap[id] = p;
+                passMap[id] = Pass(name, id, (PayType) pay, hcp, rat, pets);
             }
             else if (rpd == 'r') {
-                in.ignore();
                 getline(in, pickLoc);
                 getline(in, dropLoc);
                 in >> id >> pickTime >> cap >> pets >> dropTime >> status >> rat >> passId >> driverId;
-                Ride r(id, pickLoc, pickTime, dropLoc, cap, pets, dropTime, (Status) status, rat, passId, driverId);
-                rideMap[id] = r;
+                rideMap[id] = Ride(id, pickLoc, pickTime, dropLoc, cap, pets, dropTime, (Status) status, rat, passId, driverId);
             }
         }
         drivers.driverList = driverMap;
@@ -212,11 +232,29 @@ void Util::load(Drivers &drivers, Passes &passes, Rides &rides) {
 void Util::save(Drivers &drivers, Passes &passes, Rides &rides) {
     ofstream out("mg.dat");
     out << rides.getNextId() << " " << passes.getNextId() << " " << drivers.getNextId() << endl;
-    for (pair<int, Driver> dp : drivers.driverList) {
-        Driver d = dp.second;
-        out << 'd' << endl << d.getName() << endl << d.getNotes() << endl << d.getId() << " " << d.getCap() << " " <<
-            d.getHcp() << " " << (int) d.getType() << " " << d.getRating() << " " << d.getOpen() << " " << d.getPets()
-            << endl;
+    for (pair<int, Driver*> dp : drivers.driverList) {
+        int dt = dp.second->getDriverType();
+        out << 'd' << " " << dt;
+        out << endl << dp.second->getName() << endl << dp.second->getNotes() << endl << dp.second->getId() << " " <<
+            dp.second->getCap() << " " << dp.second->getHcp() << " " << dp.second->getRating() <<
+            " " << dp.second->getOpen() << " " << dp.second->getPets() << " " << dp.second->getCargoCap() << endl;
+        if (dt == 1) {
+            auto* e = dynamic_cast<EconomyDriver*>(dp.second);
+            out << e->getReliability() << endl;
+        }
+        else if (dt == 2) {
+            auto* b = dynamic_cast<BasicDriver*>(dp.second);
+            out << b->getAirConditioning() << " " << b->getMusic();
+        }
+        else if (dt == 3) {
+            auto* g = dynamic_cast<GroupDriver*>(dp.second);
+            out << g->getFoodAllowed() << " " << g->getExtraLegRoom() << " " << g->getRecliningSeats() << " " << (int) (g->getNoise()) << endl;
+        }
+        else {
+            auto* l = dynamic_cast<LuxuryDriver*>(dp.second);
+            out << l->getTv() << " " << l->getPhone() << " " << l->getBar() << " " << l->getPartyLights() << " " << l->getBluetooth() << " " << l->getWifi() << endl;
+            out << l->getExtras() << endl;
+        }
     }
     for (pair<int, Pass> pp : passes.passList) {
         Pass p = pp.second;
@@ -260,7 +298,7 @@ vs Util::getList(string title, const vector<Ride>& rideGroup, bool onlyTime, Pas
         temp << r.getId();
         if (!onlyTime){
             temp << " | " << "P: " << passes.passList[r.getPassId()].getName() << " (#" << r.getPassId() << ") | ";
-            temp << "D: " << drivers.driverList[r.getDriverId()].getName() << " (#" << r.getDriverId() << ")";
+            temp << "D: " << drivers.driverList[r.getDriverId()]->getName() << " (#" << r.getDriverId() << ")";
         }
         long start = r.getPickTime();
         long end = r.getDropTime();

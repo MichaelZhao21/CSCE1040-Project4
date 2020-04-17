@@ -11,7 +11,7 @@
 #include "EconomyDriver.h"
 #include "BasicDriver.h"
 #include "GroupDriver.h"
-#include "LuxaryDriver.h"
+#include "LuxuryDriver.h"
 
 enum TextLabel {INTRO = 0, MAIN, DRIVER, PASS, ADMIN};
 

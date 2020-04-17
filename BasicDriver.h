@@ -10,20 +10,30 @@ public:
      * Constructors
      */
     BasicDriver();
-    BasicDriver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open, bool pets,
-                const string &notes, int cargoCap);
+    BasicDriver(const string &name, int id, int cap, bool hcp, double rating, bool open, bool pets,
+                const string &notes, int cargoCap, bool airConditioning, bool music);
 
     /**
      * Prints the driver
      */
-    void printDriver() override;
+    void printDriver(vs& extra) override;
 
     /**
-     * Gets the minimum and maximum capacity
-     * of the type of driver
-     * @return pair of ints representing [min, max]
+     * Gets the driver type in an integer
+     * @return integer representing the type of driver
      */
-    pair<int, int> getCapacityRange() override;
+    int getDriverType() override;
+
+private:
+    bool airConditioning, music;
+public:
+    bool getAirConditioning() const;
+
+    void setAirConditioning(bool airConditioning);
+
+    bool getMusic() const;
+
+    void setMusic(bool music);
 };
 
 #endif //BASICDRIVER_H

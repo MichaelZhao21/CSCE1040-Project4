@@ -3,16 +3,15 @@
 
 #include "Defs.h"
 
-enum VehicleType {COMPACT_2_DR = 1, SEDAN_4_DR, SUV, VAN, OTHER};
-
 class Driver {
 public:
     /**
-     * Constructors
+     * Constructors and Destructor
      */
     Driver();
-    Driver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open, bool pets,
+    Driver(const string &name, int id, int cap, bool hcp, double rating, bool open, bool pets,
            const string &notes, int cargoCap);
+    virtual ~Driver() = default;
 
     /**
      * Getters and setters
@@ -25,8 +24,6 @@ public:
     void setCap(int cap);
     bool getHcp() const;
     void setHcp(bool hcp);
-    VehicleType getType() const;
-    void setType(VehicleType type);
     double getRating() const;
     void setRating(double rating);
     bool getOpen() const;
@@ -41,29 +38,19 @@ public:
     /**
      * Prints the driver
      */
-    virtual void printDriver();
+    virtual void printDriver(vs& extra);
 
     /**
-     * Gets the minimum and maximum capacity
-     * of the type of driver
-     * @return pair of ints representing [min, max]
+     * Gets the driver type in an integer
+     * @return integer representing the type of driver
      */
-    virtual pair<int, int> getCapacityRange() = 0;
+    virtual int getDriverType() = 0;
 
 protected:
     string name, notes;
     int id, cap, cargoCap;
     double rating;
     bool hcp, open, pets;
-    VehicleType type;
-
-    /**
-     * Converts the VehicleType enum to a string
-     *
-     * @param type - VehicleType enum
-     * @return string
-     */
-    static string vehicleTypeToString(VehicleType type);
 };
 
 #endif //DRIVER_H

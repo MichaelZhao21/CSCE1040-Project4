@@ -1,6 +1,6 @@
 #include "Util.h"
 
-Pass::Pass() : name(""), id(0), payType(PayType::CASH), hcp(false), minRating(0), pets(0) {}
+Pass::Pass() : name(""), id(0), payType(PayType::CASH), hcp(false), minRating(0), pets(false) {}
 
 Pass::Pass(const string &name, int id, PayType payType, bool hcp, double minRating, bool pets) : name(name), id(id),
                                                                                                  payType(payType),

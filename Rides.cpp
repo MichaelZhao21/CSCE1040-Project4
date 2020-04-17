@@ -13,7 +13,7 @@ void Rides::setNextId(int nextId) {
 }
 
 void Rides::addRide(Passes& passes, Drivers& drivers) {
-    int id, size, passId, driverId, hours, mins;
+    int id, size, passId, driverId, hours, mins, cargo;
     string pickLoc, dropLoc;
     time_t pickTime, dropTime;
     bool pets;
@@ -30,18 +30,20 @@ void Rides::addRide(Passes& passes, Drivers& drivers) {
             Util::waitForEnter();
             return;
         }
+
         Util::parseInput(dropLoc, "Dropoff location", false);
         Util::parseInput(hours, "Length of ride [hours]", 0, 24, false);
         Util::parseInput(mins, "Length of ride [mins]", 0, 59, false);
-        Util::parseInput(size, "Party size", 1, 8, false);
-        Util::parseInput(pets, "Party has pets", false);
+        Util::parseInput(size, "Party size", 1, 20, false);
+        Util::parseInput(cargo, "Number of luggage bags", 1, 15, false);
+        Util::parseInput(pets, "Party hasDD pets", false);
         dropTime = pickTime + (hours * 3600) + (mins * 60);
         if (!checkPassTime(passId, passes, pickTime, dropTime)) {
             cout << "Passenger busy during this time" << endl << endl;
             Util::waitForEnter();
             return;
         }
-        possDrivers = findAllMatchingDrivers(passes.passList[passId], drivers, size, pets);
+        possDrivers = findAllMatchingDrivers(passes.passList[passId], drivers, size, cargo, pets);
         checkDriverTime(possDrivers, drivers, pickTime, dropTime);
         if (possDrivers.empty()) {
             cout << "No drivers available :(((" << endl << endl;
@@ -50,8 +52,8 @@ void Rides::addRide(Passes& passes, Drivers& drivers) {
         }
 
     vs text {"Pick a driver"};
-    for (int i = 0; i < possDrivers.size(); i++)
-        text.push_back(to_string(possDrivers[i]) + " | " + drivers.driverList[possDrivers[i]].getName());
+    for (int possDriver : possDrivers)
+        text.push_back(to_string(possDriver) + " | " + drivers.driverList[possDriver]->getName());
     driverId = possDrivers[Util::menu(text) - 1];
 
     rideList[id] = Ride(id, pickLoc, pickTime, dropLoc, size, pets, dropTime, passId, driverId);
@@ -59,21 +61,22 @@ void Rides::addRide(Passes& passes, Drivers& drivers) {
     Util::waitForEnter();
 }
 
-vi Rides::findAllMatchingDrivers(Pass& pass, Drivers& drivers, int size, bool pets) {
+vi Rides::findAllMatchingDrivers(Pass& pass, Drivers& drivers, int size, int cargo, bool pets) {
     vi output;
-    for (pair<int, Driver> d : drivers.driverList)
-        if (checkDriverMatchReq(d.second, pass, size, pets))
+    for (pair<int, Driver*> d : drivers.driverList)
+        if (checkDriverMatchReq(d.second, pass, size, cargo, pets))
             output.push_back(d.first);
     return output;
 }
 
-bool Rides::checkDriverMatchReq(Driver& driver, Pass& pass, int size, bool pets) {
-    if (!driver.getOpen()) return false;
-    if (!driver.getPets() && pass.getPets()) return false;
-    if (!driver.getPets() && pets) return false;
-    if (driver.getCap() < size) return false;
-    if (!driver.getHcp() && pass.getHcp()) return false;
-    return driver.getRating() >= pass.getMinRating();
+bool Rides::checkDriverMatchReq(Driver* driver, Pass& pass, int size, int cargo, bool pets) {
+    if (!driver->getOpen()) return false;
+    if (!driver->getPets() && pass.getPets()) return false;
+    if (!driver->getPets() && pets) return false;
+    if (driver->getCap() < size) return false;
+    if (driver->getCargoCap() < cargo) return false;
+    if (!driver->getHcp() && pass.getHcp()) return false;
+    return driver->getRating() >= pass.getMinRating();
 }
 
 void Rides::checkDriverTime(vi& poss, Drivers& drivers, time_t pickTime, time_t dropTime) {
@@ -102,10 +105,7 @@ bool Rides::checkPassTime(int passId, Passes& passes, time_t pickTime, time_t dr
 }
 
 int Rides::findRide(Passes& passes, Drivers& drivers) {
-    if (rideListEmpty()) {
-        perror("RideList empty in Rides::findRide");
-        exit(1);
-    }
+    assert(!rideListEmpty());
     vector<Ride> rideVec;
     for (pair<int, Ride> r : rideList) {
         rideVec.push_back(r.second);
@@ -183,10 +183,10 @@ void Rides::printRideByStatus(Status s, Passes& passes, Drivers& drivers) {
     Util::waitForEnter();
 }
 
-vector<Ride> Rides::getDriverRides(Driver& driver) {
+vector<Ride> Rides::getDriverRides(Driver* driver) {
     vector<Ride> output;
     for (pair<int, Ride> r : rideList) {
-        if (r.second.getDriverId() == driver.getId() && r.second.getStatus() != Status::CANCELLED && r.second.getStatus() != Status::COMPLETED)
+        if (r.second.getDriverId() == driver->getId() && r.second.getStatus() != Status::CANCELLED && r.second.getStatus() != Status::COMPLETED)
             output.push_back(r.second);}
     return output;
 }

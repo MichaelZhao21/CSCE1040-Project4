@@ -38,25 +38,26 @@ public:
      * @param pets - Does the ride contain pets
      * @return an int vector with all of the possible driver IDs
      */
-    vi findAllMatchingDrivers(Pass& pass, Drivers& drivers, int size, bool pets);
+    vi findAllMatchingDrivers(Pass& pass, Drivers& drivers, int size, int cargo, bool pets);
     
     /**
      * Checks if the driver matches the given requirements for
      * driving a ride for a specific party
      *
-     * @param driver - Driver object
+     * @param driver - Pointer to a driver
      * @param pass - Pass object
      * @param size - The size of the ride
+     * @param cargo - The amount of luggage the passenger has
      * @param pets - Does the ride contain pets
      * @return a boolean denoting the acceptability of the driver
      */
-    bool checkDriverMatchReq(Driver& driver, Pass& pass, int size, bool pets);
+    bool checkDriverMatchReq(Driver* driver, Pass& pass, int size, int cargo, bool pets);
     
     /**
      * Sees if the driver has overlapping times
      *
      * @param poss - Vector of possible drivers
-     * @param drivers - Drivers object 
+     * @param drivers - Drivers object
      * @param pickTime - Pickup time 
      * @param dropTime - Dropoff time 
      */
@@ -127,7 +128,7 @@ public:
      * @param driver - Driver object
      * @return a vector of rides
      */
-    vector<Ride> getDriverRides(Driver& driver);
+    vector<Ride> getDriverRides(Driver* driver);
     
     /**
      * Gets all the rides that a passenger has

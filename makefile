@@ -1,5 +1,5 @@
-MeanGreenEagleLift: main.o Pass.o Ride.o Driver.o Passes.o Rides.o Drivers.o Util.o EconomyDriver.o BasicDriver.o GroupDriver.o LuxaryDriver.o
-	g++ -o MeanGreenEagleLift main.o Pass.o Ride.o Driver.o Passes.o Rides.o Drivers.o Util.o EconomyDriver.o BasicDriver.o GroupDriver.o LuxaryDriver.o
+MeanGreenEagleLift: main.o Pass.o Ride.o Driver.o Passes.o Rides.o Drivers.o Util.o EconomyDriver.o BasicDriver.o GroupDriver.o LuxuryDriver.o
+	g++ -o MeanGreenEagleLift main.o Pass.o Ride.o Driver.o Passes.o Rides.o Drivers.o Util.o EconomyDriver.o BasicDriver.o GroupDriver.o LuxuryDriver.o
 
 main.o: main.cpp Pass.h Ride.h Driver.h Passes.h Rides.h Drivers.h Util.h
 	g++ -c main.cpp
@@ -34,8 +34,8 @@ BasicDriver.o: BasicDriver.cpp Util.h BasicDriver.h
 GroupDriver.o: GroupDriver.cpp Util.h GroupDriver.h
 	g++ -c GroupDriver.cpp
 
-LuxaryDriver.o: LuxaryDriver.cpp Util.h LuxaryDriver.h
-	g++ -c LuxaryDriver.cpp
+LuxuryDriver.o: LuxuryDriver.cpp Util.h LuxuryDriver.h
+	g++ -c LuxuryDriver.cpp
 
 clean:
 	rm MeanGreenEagleLift *.o

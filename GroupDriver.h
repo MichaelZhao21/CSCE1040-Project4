@@ -4,7 +4,7 @@
 #include "Defs.h"
 #include "Driver.h"
 
-enum NoiseLevel {SILENT, LOW, MEDIUM, HIGH, UNRESTRICTED};
+enum NoiseLevel {SILENT = 1, LOW, MEDIUM, HIGH, UNRESTRICTED};
 
 class GroupDriver : public Driver {
 public:
@@ -12,7 +12,7 @@ public:
      * Constructor
      */
     GroupDriver();
-    GroupDriver(const string &name, int id, int cap, bool hcp, VehicleType type, double rating, bool open, bool pets,
+    GroupDriver(const string &name, int id, int cap, bool hcp, double rating, bool open, bool pets,
                 const string &notes, int cargoCap, bool foodAllowed, bool extraLegRoom, bool recliningSeats,
                 NoiseLevel noise);
 
@@ -31,17 +31,16 @@ public:
     /**
      * Prints the driver
      */
-    void printDriver() override;
+    void printDriver(vs& extra) override;
 
     /**
-     * Gets the minimum and maximum capacity
-     * of the type of driver
-     * @return pair of ints representing [min, max]
+     * Gets the driver type in an integer
+     * @return integer representing the type of driver
      */
-    pair<int, int> getCapacityRange() override;
+    int getDriverType() override;
 
 private:
-    bool foodAllowed, extraLegRoom, recliningSeats;
+    bool foodAllowed{}, extraLegRoom, recliningSeats;
     NoiseLevel noise;
 
     /**

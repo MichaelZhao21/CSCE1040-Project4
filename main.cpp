@@ -21,7 +21,7 @@ int main() {
     // Load :P
     Util::load(drivers, passes, rides);
 
-    // Menu system
+    // Menu system loop
     Util::mainLoop(drivers, passes, rides);
 
     // Save :DD

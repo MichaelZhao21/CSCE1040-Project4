@@ -10,6 +10,7 @@
 #include <fstream>
 #include <cmath>
 #include <regex>
+#include <cassert>
 using namespace std;
 
 typedef vector<string> vs;

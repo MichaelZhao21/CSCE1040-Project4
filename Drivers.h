@@ -7,11 +7,13 @@ using namespace std;
 
 class Drivers {
 public:
+
     /**
-     * Constructors
+     * Constructors and Destructor
      */
     Drivers();
-    Drivers(const unordered_map<int, Driver> &driverList, int nextId);
+    Drivers(const unordered_map<int, Driver*> &driverList, int nextId);
+    virtual ~Drivers();
 
     /**
      * Getters and setters
@@ -57,10 +59,21 @@ public:
      */
     bool driverListEmpty();
 
-    unordered_map<int, Driver> driverList;
+    /**
+     * Converts the driver type to a string
+     * @param dt - Integer representing the type of driver
+     * @return driver type name
+     */
+    string driverTypeIntToString(int dt);
+
+    unordered_map<int, Driver*> driverList;
 
 private:
     int nextId;
+    vector<pair<int, int>> capacities = {{1, 2}, {2, 4}, {5, 7}, {8, 20}};
+    vector<pair<int, int>> cargoCapacities = {{0, 1}, {2, 4}, {6, 10}, {1, 15}};
+    vs emptyStringVector{};
+
 };
 
 #endif //DRIVERS_H
