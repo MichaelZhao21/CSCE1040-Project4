@@ -12,7 +12,7 @@ public:
     LuxuryDriver();
     LuxuryDriver(const string &name, int id, int cap, bool hcp, double rating, bool open, bool pets,
                  const string &notes, int cargoCap, bool tv, bool phone, bool bar, bool partyLights, bool bluetooth,
-                 bool wifi, string extras);
+                 bool wifi, const string& extras);
 
     /**
      * Getters and setters

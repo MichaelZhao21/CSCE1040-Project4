@@ -5,7 +5,7 @@ LuxuryDriver::LuxuryDriver() : TV(false), phone(false), bar(false), partyLights(
 
 LuxuryDriver::LuxuryDriver(const string &name, int id, int cap, bool hcp, double rating, bool open,
                            bool pets, const string &notes, int cargoCap, bool tv, bool phone, bool bar,
-                           bool partyLights, bool bluetooth, bool wifi, const string &extras) : Driver(name, id, cap, hcp, rating, open,
+                           bool partyLights, bool bluetooth, bool wifi, const string& extras) : Driver(name, id, cap, hcp, rating, open,
                                                                                  pets, notes, cargoCap), TV(tv),
                                                                           phone(phone), bar(bar),
                                                                           partyLights(partyLights),

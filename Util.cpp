@@ -106,7 +106,7 @@ bool Util::parseInput(time_t& in, const string &message, bool checkDefault) {
         ltm->tm_year = stoi(date.substr(6, 4)) - 1900;
     }
     if (timeDef) {
-        ltm->tm_hour = stoi(timeIn.substr(0, 2));
+        ltm->tm_hour = stoi(timeIn.substr(0, 2)) - 1;
         ltm->tm_min = stoi(timeIn.substr(3, 2));
         ltm->tm_sec = stoi(timeIn.substr(6, 2));
     }
