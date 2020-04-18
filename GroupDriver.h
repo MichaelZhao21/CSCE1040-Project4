@@ -40,7 +40,7 @@ public:
     int getDriverType() override;
 
 private:
-    bool foodAllowed{}, extraLegRoom, recliningSeats;
+    bool foodAllowed, extraLegRoom, recliningSeats;
     NoiseLevel noise;
 
     /**

@@ -3,6 +3,7 @@
   <component name="SshConfigs">
     <configs>
       <sshConfig authType="PASSWORD" host="cse03.cse.unt.edu" id="11b825cd-8931-4d23-bf99-f26656097759" port="22" customName="CSCE Machines" nameFormat="CUSTOM" username="myz0004" />
+      <sshConfig authType="PASSWORD" host="cse03.cse.unt.edu" id="6c070276-207e-4c2e-be4d-d14840c26bcd" port="22" customName="CSCE Machines" nameFormat="CUSTOM" />
     </configs>
   </component>
 </project>

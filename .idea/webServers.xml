@@ -3,11 +3,10 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="45938c6f-b154-4977-8dfd-0fdceef05ccc" name="CSCE Machines" url="http://cse03.cse.unt.edu">
-        <fileTransfer host="cse03.cse.unt.edu" port="22" rootFolder="/home/myz0004" accessType="SFTP">
+        <fileTransfer rootFolder="/home/myz0004" accessType="SFTP" host="cse03.cse.unt.edu" port="22" sshConfigId="11b825cd-8931-4d23-bf99-f26656097759" sshConfig="CSCE Machines">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
     </option>
