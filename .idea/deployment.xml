@@ -10,6 +10,7 @@
           <excludedPaths>
             <excludedPath path="/1040/hwk/three/cmake-build-debug" />
             <excludedPath path="/1040/hwk/three/CMakeLists.txt" />
+            <excludedPath path="/1040/hwk/four/cmake-build-debug" />
           </excludedPaths>
         </serverdata>
       </paths>

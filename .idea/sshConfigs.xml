@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="cse03.cse.unt.edu" id="11b825cd-8931-4d23-bf99-f26656097759" port="22" customName="CSCE Machines" nameFormat="CUSTOM" username="myz0004" />
+    </configs>
+  </component>
+</project>

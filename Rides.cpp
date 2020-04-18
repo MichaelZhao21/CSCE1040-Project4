@@ -36,7 +36,7 @@ void Rides::addRide(Passes& passes, Drivers& drivers) {
         Util::parseInput(mins, "Length of ride [mins]", 0, 59, false);
         Util::parseInput(size, "Party size", 1, 20, false);
         Util::parseInput(cargo, "Number of luggage bags", 1, 15, false);
-        Util::parseInput(pets, "Party hasDD pets", false);
+        Util::parseInput(pets, "Party has pets", false);
         dropTime = pickTime + (hours * 3600) + (mins * 60);
         if (!checkPassTime(passId, passes, pickTime, dropTime)) {
             cout << "Passenger busy during this time" << endl << endl;
